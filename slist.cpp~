@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+#include <iomanip> 
+#include <cstring> 
+#include <cmath>
+
+using namespace std;
+
+struct Student;
+
+void add(vector<Student>& students);
+void print(const vector<Student>& students);
+void deletee(vector<Student>& students);
+
+struct Student {
+    char firstName[80];
+    char lastName[80];
+    int id;
+    float gpa;
+};
+
+int main() {
+    vector<Student> students; 
+    string input;
+    bool start = true;
+
+    while (start = true) {
+        cout << "Enter ADD, PRINT, DELETE, or QUIT " << endl;
+        cin >> input;
+
+        if (input == "ADD") {
+            add(students);
+        } else if (input == "PRINT") {
+            print(students);
+        } else if (input == "DELETE") {
+            deletee(students);
+        } else if (input == "QUIT") {
+            return false; 
+        } else {
+            cout << "invalid input try again" << endl;
+        }
+    }
+
+    return 0;
+}
+
+void add(vector<Student>& students) {
+    Student nerd; 
+
+    cout << "Enter First Name: " << endl;
+    cin >> nerd.firstName;
+
+    
+    cout << "Enter Last Name: " << endl;
+    cin >> nerd.lastName;
+    
+    cout << "Enter ID: " << endl;
+    cin >> nerd.id;
+    
+    cout << "Enter GPA: " << endl;
+    cin >> nerd.gpa;
+    
+    while (nerd.gpa < 0.0 || nerd.gpa > 4.0) {  
+        cout << "Gpa should be from 0 - 4: " << endl;
+        cin >> nerd.gpa;
+    }
+    
+
+    students.push_back(nerd); 
+}
+
+
+void print(const vector<Student>& student) {
+    
+    for (int i = 0; i < student.size(); ++i) { //Change maybe
+        float roundedGPA = round(student[i].gpa * 100) / 100;
+        cout << student[i].firstName << " " << student[i].lastName << ", " << student[i].id << ", " << roundedGPA << endl;
+    
+    }
+}
+
+void deletee(vector<Student>& students) { 
+    int deleteId = 0;
+    
+    cout << "Enter student ID to delete: ";
+    cin >> deleteId;
+
+    for (int i = 0; i < students.size(); ++i) {
+        if (students[i].id == deleteId) {  
+            students.erase(students.begin() + i);  //look over
+            cout << "ID " << deleteId << " deleted." << endl;
+            return;  
+        }
+    }
+
+    cout << "ID " << deleteId << " not found." << endl;
+}
